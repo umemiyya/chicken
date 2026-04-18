@@ -27,9 +27,9 @@ export function Navbar() {
             <Link href="/informasi" className="text-foreground hover:text-primary transition-colors text-sm">
               Informasi
             </Link>
-            <Link href="/admin" className="text-foreground hover:text-primary transition-colors text-sm">
+            {/* <Link href="/admin" className="text-foreground hover:text-primary transition-colors text-sm">
               Admin
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
