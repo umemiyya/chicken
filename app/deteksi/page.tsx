@@ -159,33 +159,46 @@ const handleProcess = async () => {
     // console.log('[v0] Sending to Roboflow API...')
 
     // Call API
-    const response = await fetch(
-      'https://serverless.roboflow.com/lumiares-workspace/workflows/detect-count-and-visualize',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          api_key: 'C5M2Skv7atL7TgYUz0tY',
-          inputs: {
-            image: {
-              type: 'base64',
-              value: base64String.split(',')[1],
-            },
-          },
-        }),
-      }
-    )
+    // const response = await fetch(
+    //   'https://serverless.roboflow.com/lumiares-workspace/workflows/detect-count-and-visualize',
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       api_key: 'C5M2Skv7atL7TgYUz0tY',
+    //       inputs: {
+    //         image: {
+    //           type: 'base64',
+    //           value: base64String.split(',')[1],
+    //         },
+    //       },
+    //     }),
+    //   }
+    // )
 
-    // console.log('[v0] API Response status:', response.status)
+    const response = await fetch('/api/detect', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    image: {
+      type: 'base64',
+      value: base64String.split(',')[1],
+    },
+  }),
+})
+
+    console.log('[v0] API Response status:', response.status)
 
     if (!response.ok) {
       throw new Error(`API Error: ${response.status} ${response.statusText}`)
     }
 
     const result = await response.json()
-    // console.log('[v0] Detection result:', result)
+    console.log('[v0] Detection result:', result)
 
     // ✅ FIX FINAL: ambil array yang BENAR
     const predictionsRaw =
@@ -195,7 +208,7 @@ const handleProcess = async () => {
       ? predictionsRaw
       : []
 
-    // console.log('[v0] Predictions:', predictions)
+    console.log('[v0] Predictions:', predictions)
 
     // ✅ TOTAL AYAM
     const totalChickens = predictions.length
@@ -253,7 +266,7 @@ const handleProcess = async () => {
 
     // console.log('[v0] Detection complete, showing results')
   } catch (err) {
-    // console.error('[v0] Error:', err)
+    console.error('[v0] Error:', err)
     setError(
       err instanceof Error
         ? err.message
